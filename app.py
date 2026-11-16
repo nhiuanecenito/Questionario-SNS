@@ -5,7 +5,7 @@ app=Flask(__name__)
 app.secret_key=os.environ.get("SECRET_KEY","change-this-secret-before-production")
 DB=os.environ.get("DATABASE_PATH","responses.db")
 QUESTIONS=[
-("1","Há quanto tempo trabalha na SNS?","text",[]),
+("1","Nome e há quanto tempo trabalha na SNS?","text",[]),
 ("2","Com que frequência utiliza sistemas informáticos no seu trabalho diário?","choice",["Raramente","Algumas vezes por semana","Diariamente","Não Utiliza"]),
 ("3",'O que é "phishing"?',"choice",["Um tipo de Vírus que danifica o computador","Uma tentativa fraudulenta de obter informação sensível fazendo-se passar por uma entidade confiável","Uma falha técnica no sistema de e-mail","Não Sei"]),
 ("4","Qual das seguintes opções descreve melhor a autenticação multifator?","choice",["Utilizar duas ou mais formas de verificação para aceder a uma conta","Utilizar uma palavra-passe mais longa","Alterar a palavra-passe todos os dias","Não sei"]),
