@@ -5,7 +5,7 @@ app=Flask(__name__)
 app.secret_key=os.environ.get("SECRET_KEY","change-this-secret-before-production")
 DB=os.environ.get("DATABASE_PATH","responses.db")
 QUESTIONS=[
-("1","Nome e há quanto tempo trabalha na SNS?","text",[]),
+("1","Indique o seu nome e há quanto tempo trabalha na SNS.","text",[]),
 ("2","Com que frequência utiliza sistemas informáticos no seu trabalho diário?","choice",["Raramente","Algumas vezes por semana","Diariamente","Não Utiliza"]),
 ("3",'O que é "phishing"?',"choice",["Um tipo de Vírus que danifica o computador","Uma tentativa fraudulenta de obter informação sensível fazendo-se passar por uma entidade confiável","Uma falha técnica no sistema de e-mail","Não Sei"]),
 ("4","Qual das seguintes opções descreve melhor a autenticação multifator?","choice",["Utilizar duas ou mais formas de verificação para aceder a uma conta","Utilizar uma palavra-passe mais longa","Alterar a palavra-passe todos os dias","Não sei"]),
@@ -35,7 +35,7 @@ BASE="""<!doctype html><html lang=pt><meta name=viewport content="width=device-w
 def page(title,body,**kw): return render_template_string(BASE,title=title,body=render_template_string(body,**kw))
 @app.get("/")
 def index():
- body="""<h1>Questionário — Segurança Cibernética na SNS</h1><p class=muted><b>Dirigido a:</b> Funcionários Administrativos</p><p class=muted>Este questionário é aplicado no âmbito de uma monografia de licenciatura, com o objectivo de compreender as práticas e os conhecimentos dos colaboradores da SNS em matéria de segurança cibernética. As respostas são anónimas e confidenciais, sendo utilizadas exclusivamente para fins académicos. O preenchimento é voluntário e pode ser interrompido a qualquer momento sem qualquer consequência. Não existem respostas certas ou erradas: pretende-se apenas conhecer a sua experiência e percepção reais. Agradece-se a sua colaboração.</p><form method=post action=/submit>"""
+ body="""<h1>Questionário — Segurança Cibernética na SNS</h1><p class=muted><b>Dirigido a:</b> Funcionários Administrativos</p><p class=muted>Este questionário é aplicado no âmbito de uma monografia de licenciatura, com o objectivo de compreender as práticas e os conhecimentos dos colaboradores da SNS em matéria de segurança cibernética. As respostas são confidenciais e serão utilizadas exclusivamente para fins académicos. Como este questionário solicita o seu nome, a participação não é anónima. O preenchimento é voluntário e pode ser interrompido a qualquer momento sem qualquer consequência. Não existem respostas certas ou erradas: pretende-se apenas conhecer a sua experiência e percepção reais. Agradece-se a sua colaboração.</p><form method=post action=/submit>"""
  sections={1:"Perfil",3:"Conhecimento Geral de Segurança Cibernética",6:"Práticas de Palavra-passe",8:"Reconhecimento de Ameaças (cenário prático)",10:"Políticas Internas",12:"Percepção de Risco",15:"Percepção de Gravidade dos Riscos"}
  for n,q,t,opts in QUESTIONS:
   if n in sections: body+=f"<h2>Secção {list(sections).index(n)+1}: {sections[n]}</h2>"
@@ -45,7 +45,7 @@ def index():
    if t=="scale": body+='<p><small>Seleccione uma opção de 1 a 5.</small></p>'
    for o in opts: body+=f'<label class=opt><input type=radio name=q{n} value="{o}" required> {o}</label>'
   body+="</div>"
- body+="<p class=notice>Ao submeter, confirma que participa voluntariamente. Não recolhemos nome nem endereço de e-mail.</p><button type=submit>Enviar respostas</button></form>"
+ body+="<p class=notice>Ao submeter, confirma que participa voluntariamente. O seu nome será recolhido apenas para fins desta pesquisa e tratado com confidencialidade.</p><button type=submit>Enviar respostas</button></form>"
  return page("Questionário SNS",body)
 @app.post("/submit")
 def submit():
